@@ -3,14 +3,29 @@ const { read } = require('fs');
 const inquirer = require('inquirer');
 const { title } = require('process');
 const mockData = require('./utils/generateMockData.js');
+const { writeFile } = require('./utils/generateFile.js');
 
-console.log(mockData());
-// const { writeFile, copyFile } = require('./utils/generate-site.js');
-// const generatePage = require('./src/page-template.js');
+//console.log(mockData());
+const testingBln = true;
+
+const generatePage = require('./src/generatePage.js');
 
 // TODO: Create an array of questions for user input
 const generalQuestions = [
 // title, description, installation, usage, license, licenseLink, howToContribute
+    {
+        type: 'input',
+        name: 'author',
+        message: 'What is your name? (required)',
+        validate: authorInput => {
+            if (authorInput) {
+            return true;
+            } else {
+            console.log('Please enter your name!');
+            return false;
+            }
+        }
+    },
     {
         type: 'input',
         name: 'title',
@@ -189,6 +204,18 @@ const promptMultiple = (questions, section) => {
 
 // TODO: Create a function to initialize app
 function  init() {
+    if (testingBln) {
+        var page = generatePage(mockData());
+        page = page.split(/\r?\n/)
+        .map(line => {
+            line = line.trim();
+            var testLine = line;
+            if (testLine.replace(' ','') == ''){line = ''}
+            return line;
+        })
+        .join('\n');
+        console.log(page);
+    }else{
     //prompt user.. .then .catch
     promptUser(generalQuestions)
         .then(answerData => {
@@ -204,25 +231,15 @@ function  init() {
         .then(answerData => {
             return promptMultiple(testQuestions, 'tests');
         })
-        .then(answerData => console.log(readMeData))
-
-    // promptUser(generalQuestions)
-    //     .then(answerData => {
-    //         readMeData.push(answerData);
-    //         promptUser(creditsQuestions)
-    //             .then(creditData => {
-    //                 console.log(readMeData.credits);
-    //                 readMeData.credits.push(creditData);
-    //                 if (creditData.confirmAddCredit) {
-    //                 return promptUser(creditsQuestions);
-    //                 } else {
-    //                 return portfolioData;
-    //                 } 
-    //             })
-    //             .then(result => console.log(readMeData))
-    //     }
-    //     )
-
+        .then(answerData => {
+            var page = generatePage(readMeData).split(/\r?\n/)
+                .trim()
+                .replace(/^\s+|\s+$/g, "")
+                .join();
+            console.log(page);
+            
+        });
+    }
 }
 
 // Function call to initialize app
