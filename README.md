@@ -64,7 +64,8 @@ Fork the repo, make changes, and submit a pull request.  All feedback, suggestio
 
 ## Credits
 [Thanks to Xandromus and gchoi2u for the starter code]( https://github.com/coding-boot-camp/potential-enigma)
-[hanks to my bootcamp instructors and mentors](https://github.com/coding-boot-camp/potential-enigma)
+
+[Thanks to my bootcamp instructors and mentors](https://github.com/coding-boot-camp/potential-enigma)
 
 
 [Return to Table Of Contents](#table-of-contents)
