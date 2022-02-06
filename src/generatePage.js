@@ -1,5 +1,4 @@
-//const { trimStart } = require("lodash");
-
+// Create TOC Section
 // Only add sections to the TOC if they have data
 const generateTOC = (myGeneralInfo, myCredits, myBadges, myFeatures, myTests) => {
     let myTOC = '';
@@ -70,7 +69,7 @@ const generateGeneralInfo = myGeneralInfo => {
             generalInfoMD = generalInfoMD + `
             ## License
 
-            ![License Image](${myGeneralInfo.licenseLink}) ${myGeneralInfo.license}
+            ![License Image](${myGeneralInfo.licenseImage}) ${myGeneralInfo.license}
             
             [Return to Table Of Contents](#table-of-contents)
             `;  
@@ -88,7 +87,7 @@ const generateGeneralInfo = myGeneralInfo => {
     }
 }
 
-// ${generateTFeatures(features)}
+// Features Section - Can have multiple features
 const generateFeatures = featuresArr => {
     if (!featuresArr[0].featureText) {
         return '';
@@ -185,10 +184,12 @@ const generateCredits = creditsArr => {
         `;
     }
 };
+
+//The exported function pulls everything together and creates the page markdown
 module.exports = templateData => {
     // destructure page data by section
     const { generalInfo, credits, badges, features, tests } = templateData;
-
+    //console.log(templateData);
     return `# ${generalInfo.title}
 
     ## Description

@@ -5,9 +5,6 @@ const { writeFile } = require('./utils/generateFile.js');
 const generatePage = require('./src/generatePage.js');
 const {generalQuestions,creditQuestions, featureQuestions,badgeQuestions,  testQuestions } = require('./src/questions.js');
 
-//const { read } = require('fs');
-//const { title } = require('process');
-
 // ***Testing/Mock Data Switch***
 const testingBln = false;
 //const testingBln = true;
@@ -22,18 +19,15 @@ const readMeData = {
     tests:[]
 };
 
-// TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
-
+// Function to promt user with one time questions
 const promptUser = (questions) => {
     return inquirer.prompt(questions);
 }
 
+// Function to prompt user with repeatable questions ie multiple features
 const promptMultiple = (questions, section) => {
     return inquirer.prompt(questions)
         .then(answers => {
-            // console.log(readMeData);
-            // console.log(readMeData[section]);
             readMeData[section].push(answers);
             if (answers.confirmAdd) {
             return promptMultiple(questions, section);
@@ -43,8 +37,9 @@ const promptMultiple = (questions, section) => {
         });
 }
 
-// TODO: Create a function to initialize app
+// A function to initialize app
 function  init() {
+    // Test it out with mock data
     if (testingBln) {
         var page = generatePage(mockData());
         page = page.split(/\r?\n/)
@@ -57,7 +52,7 @@ function  init() {
         .join('\n');
         console.log(page);
     }else{
-    //prompt user.. .then .catch
+    // The real deal starts here - prompt user.. .then .catch
     promptUser(generalQuestions)
         .then(answerData => {
             readMeData.generalInfo = answerData;
@@ -73,7 +68,9 @@ function  init() {
             return promptMultiple(testQuestions, 'tests');
         })
         .then(answerData => {
-             var page = generatePage(mockData());
+            // We have all the answers, now generat the page
+            //first remove all leading spaces so that the page is well formatted
+            var page = generatePage(readMeData);
             page = page.split(/\r?\n/)
             .map(line => {
                 line = line.trim();
@@ -82,8 +79,15 @@ function  init() {
                 return line;
             })
             .join('\n');
-            console.log(page);
+            return page;
             
+        })
+        .then(page => {
+            //write page to file
+            return writeFile(page);
+        })
+        .catch(err => {
+            console.log(err);
         });
     }
 }
