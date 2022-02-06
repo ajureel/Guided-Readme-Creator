@@ -39,15 +39,16 @@ See it in action here: https://drive.google.com/file/d/13eQQbQOOnktBmLEhVO2A3Vy3
 ### Command-line application using Inquirer to prompt the user with questions about their project
 Questions include  the title of my project, Description, Features, Installation, Usage, License, How to contribute, Tests.
 
-![](./assets/images/screenshot-execution.png)
+![feature screenshot](/assets/images/screenshot-execution.png)
+
 ### Recursive questions for sections that can have multiple responses.
 The app will ask the user if they have additional responses for Features, Credits, Badges, and Tests
 
-![Recursive questions for sections that can have multiple responses.]()
+![feature screenshot](/assets/images/screenshot-multi-question-section.png)
+
 ### Table of Contents
 Sections are only included in the TOC if data is present, otherwise a section without data is not listed.  The TOC includes links to those sections.
 
-![Table of Contents](https://media.wired.co.uk/photos/60c8730fa81eb7f50b44037e/3:2/w_3329,h_2219,c_limit/1521-WIRED-Cat.jpeg)
 
 [Return to Table Of Contents](#table-of-contents)
 
